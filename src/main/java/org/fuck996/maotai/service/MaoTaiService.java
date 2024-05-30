@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.fuck996.maotai.config.MaoTaiConfig;
 import org.fuck996.maotai.utils.HttpUtils;
+import org.fuck996.maotai.utils.PushPlusApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,14 @@ public class MaoTaiService {
     @Autowired
     private MaoTaiConfig maoTaiConfig;
 
-    @Value("${maotai.message.pushKey}")
-    private String pushKey; // pushKey
-
-    @Value("${maotai.message.pushUrl}")
-    private String pushUrl; // pushUrl
+//    @Value("${maotai.message.pushKey}")
+//    private String pushKey; // pushKey
+//
+//    @Value("${maotai.message.pushUrl}")
+//    private String pushUrl; // pushUrl
+    
+    @Autowired
+    private PushPlusApi pushPlusApi;
 
     private String HOST = "https://gw.huiqunchina.com";
     private String AK = "00670fb03584fbf44dd6b136e534f495";
@@ -37,23 +41,7 @@ public class MaoTaiService {
      * @throws Exception
      */
     private void pushMessage(String text, String desp) throws Exception {
-
-        StringBuilder body = new StringBuilder();
-        body.append("pushkey=").append(pushKey)
-                .append("&text=").append(text)
-                .append("&desp=").append(desp)
-                .append("&type=markdown");
-
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type","application/x-www-form-urlencoded");
-
-        String response = HttpUtils.sendPost(pushUrl,headers,body.toString());
-        JsonObject responseJson = JsonParser.parseString(response).getAsJsonObject();
-        if (0 != responseJson.get("code").getAsInt()) {
-            System.out.println("消息发送失败");
-        }
-        // String phone = userInfoJson.getAsJsonObject("data").get("phone").getAsString();
-        System.out.println(response);
+        pushPlusApi.sendNotice(text, desp);
     }
 
     private String getWinningRecord(String appId, String cookie) throws Exception {
