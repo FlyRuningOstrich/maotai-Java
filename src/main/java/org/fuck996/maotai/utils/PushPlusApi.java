@@ -2,8 +2,9 @@ package org.fuck996.maotai.utils;
 
 import cn.hutool.http.HttpUtil;
 
-import org.fuck996.maotai.utils.manager.AsyncManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -18,10 +19,11 @@ public class PushPlusApi {
 
     @Value("${maotai.msg.token}")
     private String token;
+    @Autowired
+    private ThreadPoolTaskExecutor asyncServiceExecutor;
 
     public void sendNotice(String title, String content) {
-        
-        AsyncManager.me().execute(sendNotice(token, title, content, "txt"));
+        asyncServiceExecutor.execute(sendNotice(token, title, content, "txt"));
     }
 
     /**
