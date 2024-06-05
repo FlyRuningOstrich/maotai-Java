@@ -1,6 +1,6 @@
-## 葫芦娃预约Java版
+## huluwa预约Java版
 
-葫芦娃预约Java版基于[yize8888](https://github.com/yize8888/maotai)的js版开发
+huluwa预约Java版基于[yize8888](https://github.com/yize8888/maotai)的js版开发
 其中也有自己修改的[js版](https://github.com/suiyi519/maotai)
 
 * 采用jdk21开发
