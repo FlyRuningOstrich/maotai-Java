@@ -30,7 +30,7 @@ maotai:
     pushKey: PDU
     pushUrl: https://api2.pushdeer.com/message/push
     scheduled:
-      cron: 0 26 11 * * * # 中奖记录定时
+      cron: 0 45 10 * * * # 中奖记录定时
       enable: true # 是否开启
   msg:
     token: 624e7c0cc96e4cc7a4435d4dc513e3fc
